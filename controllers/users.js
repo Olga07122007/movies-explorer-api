@@ -16,8 +16,6 @@ const UnauthorizedError = require('../errors/UnauthorizedError');
 
 const { NODE_ENV, JWT_SECRET } = process.env;
 
-
-
 // получение информации о текущем пользователе
 module.exports.getMe = (req, res, next) => {
   User.findById(req.user._id)
@@ -101,8 +99,6 @@ module.exports.createUser = (req, res, next) => {
     .catch(next);
 };
 
-
-
 // login
 module.exports.login = (req, res, next) => {
   const { email, password } = req.body;
@@ -119,6 +115,3 @@ module.exports.login = (req, res, next) => {
       next(new UnauthorizedError('Неправильные почта или пароль'));
     });
 };
-
-
-

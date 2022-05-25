@@ -4,25 +4,19 @@ const mongoose = require('mongoose');
 
 const cors = require('cors');
 
+const helmet = require('helmet');
+
 const { errors } = require('celebrate');
 
 const bodyParser = require('body-parser');
 
-const usersRouter = require('./routes/users');
+const { routes } = require('./routes');
 
-const moviesRouter = require('./routes/movies');
-
-const { login, createUser } = require('./controllers/users');
-
-const auth = require('./middlewares/auth');
-
-const NotFoundError = require('./errors/NotFoundError');
+const { limiter } = require('./middlewares/limiter');
 
 const centralizedError = require('./middlewares/centralizedError');
 
 const { requestLogger, errorLogger } = require('./middlewares/logger');
-
-const { createUserValidation, loginValidation } = require('./middlewares/validatons');
 
 const { PORT = 3000 } = process.env;
 const app = express();
@@ -35,29 +29,23 @@ mongoose.connect('mongodb://localhost:27017/bitfilmsdb');
 
 app.use(cors());
 
+app.use(helmet());
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // подключаем логгер запросов
 app.use(requestLogger);
 
-// роуты, не требующие авторизации
-app.post('/signin', loginValidation, login);
-app.post('/signup', createUserValidation, createUser);
+// подключаем  rate limiter для всех запросов к API
+app.use(limiter);
 
-// авторизация
-app.use(auth);
-
-// роуты, которым нужна авторизация
-app.use(moviesRouter);
-app.use(usersRouter);
-
-app.use('/*', () => {
-  throw new NotFoundError('Страница по указанному маршруту не найдена');
-});
+// подключаем роуты
+app.use(routes);
 
 // подключаем логгер ошибок
 app.use(errorLogger);
+
 // обработчик ошибок celebrate
 app.use(errors());
 // Централизованная обработка ошибок
@@ -65,5 +53,4 @@ app.use(centralizedError);
 
 app.listen(PORT, () => {
   console.log(`App listening on port ${PORT}`);
-  console.log('123');
 });

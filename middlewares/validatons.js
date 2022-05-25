@@ -26,13 +26,6 @@ module.exports.updateUserValidation = celebrate({
   }),
 });
 
-// id пользователя
-module.exports.userIdValidation = celebrate({
-  params: Joi.object().keys({
-    userId: Joi.string().required().length(24).hex(),
-  }),
-});
-
 // создать фильм
 module.exports.createMovieValidation = celebrate({
   body: Joi.object().keys({
