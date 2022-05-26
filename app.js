@@ -25,7 +25,7 @@ const app = express();
 require('dotenv').config();
 
 // подключаем базу данных
-mongoose.connect('mongodb://localhost:27017/bitfilmsdb');
+mongoose.connect('mongodb://localhost:27017/moviesdb');
 
 app.use(cors());
 
