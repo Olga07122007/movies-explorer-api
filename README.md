@@ -13,18 +13,20 @@
 ## Директории
 
 `/routes` — папка с файлами роутера  
-`/controllers` — папка с файлами контроллеров пользователя и фильма   
+`/controllers` — папка с файлами контроллеров пользователя и фильма  
 `/models` — папка с файлами описания схем пользователя и фильма  
   
 
 
 ## Запуск проекта
 
-`npm run start` — запускает сервер   
+`npm run start` — запускает сервер  
 `npm run dev` — запускает сервер с hot-reload  
   
   
-<ins>Ссылка на проект movies-explorer-api:</ins> https://api.movies.olga18.nomoreparties.sbs  
+## Ссылка на проект movies-explorer-api:
+
+https://api.movies.olga18.nomoreparties.sbs  
   
 Публичный IP-адрес сервера - 51.250.92.97  
   
