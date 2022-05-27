@@ -1,7 +1,7 @@
 {
   "name": "movies-explorer-api",
   "version": "1.0.0",
-  "description": "",
+  "description": "Бэкенд приложения movies-explorer-api",
   "main": "index.js",
   "scripts": {
     "start": "node app.js",

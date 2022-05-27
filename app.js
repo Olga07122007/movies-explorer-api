@@ -18,14 +18,15 @@ const centralizedError = require('./middlewares/centralizedError');
 
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
-const { PORT = 3000 } = process.env;
-const app = express();
-
 // добавляем переменные из файла .env в process.env
 require('dotenv').config();
 
+const { PORT = 3000, NODE_ENV, DB_CONN } = process.env;
+
+const app = express();
+
 // подключаем базу данных
-mongoose.connect('mongodb://localhost:27017/moviesdb');
+mongoose.connect(NODE_ENV === 'production' ? DB_CONN : 'mongodb://localhost:27017/moviesdb');
 
 app.use(cors());
 
