@@ -55,8 +55,12 @@ module.exports.updateUser = (req, res, next) => {
     .catch((err) => {
       if (err.name === 'ValidationError') {
         next(new BadRequestError('Переданы некорректные данные при обновлении профиля'));
+      } else
+      if (err.code === 11000) {
+        next(new ConflictError('Данный email уже существует'));
+      } else {
+        next(err);
       }
-      next(err);
     });
 };
 
@@ -89,11 +93,12 @@ module.exports.createUser = (req, res, next) => {
         .catch((err) => {
           if (err.name === 'ValidationError') {
             next(new BadRequestError('Переданы некорректные данные при создании пользователя'));
-          }
+          } else
           if (err.code === 11000) {
             next(new ConflictError('Данный email уже существует'));
+          } else {
+            next(err);
           }
-          next(err);
         });
     })
     .catch(next);

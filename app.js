@@ -12,8 +12,6 @@ const bodyParser = require('body-parser');
 
 const { routes } = require('./routes');
 
-const { limiter } = require('./middlewares/limiter');
-
 const centralizedError = require('./middlewares/centralizedError');
 
 const { requestLogger, errorLogger } = require('./middlewares/logger');
@@ -37,9 +35,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // подключаем логгер запросов
 app.use(requestLogger);
-
-// подключаем  rate limiter для всех запросов к API
-app.use(limiter);
 
 // подключаем роуты
 app.use(routes);
